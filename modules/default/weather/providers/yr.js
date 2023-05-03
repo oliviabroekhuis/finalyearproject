@@ -7,7 +7,7 @@
  * By Magnus Marthinsen
  * MIT Licensed
  *
- * This class is a provider for Yr.no, a norwegian weather service.
+ * This class is a provider for Yr.no, a norwegian sweather service.
  *
  * Terms of service: https://developer.yr.no/doc/TermsOfService/
  */
@@ -47,7 +47,7 @@ WeatherProvider.register("yr", {
 		const getRequests = [this.getWeatherData(), this.getStellarData()];
 		const [weatherData, stellarData] = await Promise.all(getRequests);
 		if (!stellarData) {
-			Log.warn("No stellar data available.");
+			Log.warn("No stelar data available.");
 		}
 		if (!weatherData.properties.timeseries || !weatherData.properties.timeseries[0]) {
 			Log.error("No weather data available.");
@@ -65,8 +65,7 @@ WeatherProvider.register("yr", {
 		}
 		const forecastXHours = this.getForecastForXHoursFrom(forecast.data);
 		forecast.weatherType = this.convertWeatherType(forecastXHours.summary.symbol_code, forecast.time);
-		forecast.precipitationAmount = forecastXHours.details?.precipitation_amount;
-		forecast.precipitationProbability = forecastXHours.details?.probability_of_precipitation;
+		forecast.precipitation = forecastXHours.details?.precipitation_amount;
 		forecast.minTemperature = forecastXHours.details?.air_temperature_min;
 		forecast.maxTemperature = forecastXHours.details?.air_temperature_max;
 		return this.getWeatherDataFrom(forecast, stellarData, weatherData.properties.meta.units);
@@ -252,12 +251,12 @@ WeatherProvider.register("yr", {
 						this.cacheStellarData(stellarData);
 						resolve(stellarData);
 					} else {
-						reject(`No stellar data returned from Yr for ${tomorrow}`);
+						reject("No stellar data returned from Yr for " + tomorrow);
 					}
 				})
 				.catch((err) => {
 					Log.error(err);
-					reject(`Unable to get stellar data from Yr for ${tomorrow}`);
+					reject("Unable to get stellar data from Yr for " + tomorrow);
 				})
 				.finally(() => {
 					localStorage.removeItem("yrIsFetchingStellarData");
@@ -275,7 +274,7 @@ WeatherProvider.register("yr", {
 						this.cacheStellarData(stellarData);
 						resolve(stellarData);
 					} else {
-						Log.error(`Something went wrong when fetching stellar data. Responses: ${stellarData}`);
+						Log.error("Something went wrong when fetching stellar data. Responses: " + stellarData);
 						reject(stellarData);
 					}
 				})
@@ -359,20 +358,19 @@ WeatherProvider.register("yr", {
 	},
 
 	getWeatherDataFrom(forecast, stellarData, units) {
-		const weather = new WeatherObject();
+		const weather = new WeatherObject(this.config.units, this.config.tempUnits, this.config.windUnits, this.config.useKmh);
 		const stellarTimesToday = stellarData?.today ? this.getStellarTimesFrom(stellarData.today, moment().format("YYYY-MM-DD")) : undefined;
 		const stellarTimesTomorrow = stellarData?.tomorrow ? this.getStellarTimesFrom(stellarData.tomorrow, moment().add(1, "days").format("YYYY-MM-DD")) : undefined;
 
 		weather.date = moment(forecast.time);
 		weather.windSpeed = forecast.data.instant.details.wind_speed;
-		weather.windFromDirection = forecast.data.instant.details.wind_from_direction;
+		weather.windDirection = (forecast.data.instant.details.wind_from_direction + 180) % 360;
 		weather.temperature = forecast.data.instant.details.air_temperature;
 		weather.minTemperature = forecast.minTemperature;
 		weather.maxTemperature = forecast.maxTemperature;
 		weather.weatherType = forecast.weatherType;
 		weather.humidity = forecast.data.instant.details.relative_humidity;
-		weather.precipitationAmount = forecast.precipitationAmount;
-		weather.precipitationProbability = forecast.precipitationProbability;
+		weather.precipitation = forecast.precipitation;
 		weather.precipitationUnits = units.precipitation_amount;
 
 		if (stellarTimesToday) {
@@ -532,7 +530,7 @@ WeatherProvider.register("yr", {
 			return;
 		}
 		if (!stellarData) {
-			Log.warn("No stellar data available.");
+			Log.warn("No stelar data available.");
 		}
 		let forecasts;
 		switch (type) {
@@ -556,8 +554,7 @@ WeatherProvider.register("yr", {
 
 		for (const forecast of weatherData.properties.timeseries) {
 			forecast.symbol = forecast.data.next_1_hours?.summary?.symbol_code;
-			forecast.precipitationAmount = forecast.data.next_1_hours?.details?.precipitation_amount;
-			forecast.precipitationProbability = forecast.data.next_1_hours?.details?.probability_of_precipitation;
+			forecast.precipitation = forecast.data.next_1_hours?.details?.precipitation_amount;
 			forecast.minTemperature = forecast.data.next_1_hours?.details?.air_temperature_min;
 			forecast.maxTemperature = forecast.data.next_1_hours?.details?.air_temperature_max;
 			forecast.weatherType = this.convertWeatherType(forecast.symbol, forecast.time);
@@ -602,8 +599,7 @@ WeatherProvider.register("yr", {
 			const forecastXHours = forecast.data.next_12_hours ?? forecast.data.next_6_hours ?? forecast.data.next_1_hours;
 			if (forecastXHours) {
 				forecast.symbol = forecastXHours.summary?.symbol_code;
-				forecast.precipitationAmount = forecastXHours.details?.precipitation_amount ?? forecast.data.next_6_hours?.details?.precipitation_amount; // 6 hours is likely to have precipitation amount even if 12 hours does not
-				forecast.precipitationProbability = forecastXHours.details?.probability_of_precipitation;
+				forecast.precipitation = forecastXHours.details?.precipitation_amount;
 				forecast.minTemperature = minTemperature;
 				forecast.maxTemperature = maxTemperature;
 

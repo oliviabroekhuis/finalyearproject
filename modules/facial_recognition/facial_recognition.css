@@ -1,0 +1,19 @@
+.face-image {
+    width: 400px;
+    height: 400px;
+}
+
+.face-image img {
+    width: 90%;
+    height: auto;
+	border: 1px solid #DDDDDD;      
+	border-radius: 20% 20% 20% 20%;      
+	padding: 4px;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(80%);
+}
+
+
+.face-image.right {
+    margin: 0 0 0 auto;
+}

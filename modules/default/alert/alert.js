@@ -35,8 +35,7 @@ Module.register("alert", {
 			fr: "translations/fr.json",
 			hu: "translations/hu.json",
 			nl: "translations/nl.json",
-			ru: "translations/ru.json",
-			th: "translations/th.json"
+			ru: "translations/ru.json"
 		};
 	},
 
@@ -44,7 +43,7 @@ Module.register("alert", {
 		return `templates/${type}.njk`;
 	},
 
-	async start() {
+	start() {
 		Log.info(`Starting module: ${this.name}`);
 
 		if (this.config.effect === "slide") {
@@ -53,7 +52,7 @@ Module.register("alert", {
 
 		if (this.config.welcome_message) {
 			const message = this.config.welcome_message === true ? this.translate("welcome") : this.config.welcome_message;
-			await this.showNotification({ title: this.translate("sysTitle"), message });
+			this.showNotification({ title: this.translate("sysTitle"), message });
 		}
 	},
 
@@ -70,7 +69,7 @@ Module.register("alert", {
 	},
 
 	async showNotification(notification) {
-		const message = await this.renderMessage(notification.templateName || "notification", notification);
+		const message = await this.renderMessage("notification", notification);
 
 		new NotificationFx({
 			message,
@@ -91,7 +90,7 @@ Module.register("alert", {
 			this.toggleBlur(true);
 		}
 
-		const message = await this.renderMessage(alert.templateName || "alert", alert);
+		const message = await this.renderMessage("alert", alert);
 
 		// Store alert in this.alerts
 		this.alerts[sender.name] = new NotificationFx({

@@ -1,37 +1,37 @@
-.clock-grid {
+.clockGrid {
   display: inline-flex;
   gap: 15px;
 }
 
-.clock-grid-left {
+.clockGrid--left {
   flex-direction: row;
 }
 
-.clock-grid-right {
+.clockGrid--right {
   flex-direction: row-reverse;
 }
 
-.clock-grid-top {
+.clockGrid--top {
   flex-direction: column;
 }
 
-.clock-grid-bottom {
+.clockGrid--bottom {
   flex-direction: column-reverse;
 }
 
-.clock-circle {
+.clockCircle {
   place-self: center;
   position: relative;
   border-radius: 50%;
   background-size: 100%;
 }
 
-.clock-face {
+.clockFace {
   width: 100%;
   height: 100%;
 }
 
-.clock-face::after {
+.clockFace::after {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -44,7 +44,7 @@
   display: block;
 }
 
-.clock-hour {
+.clockHour {
   width: 0;
   height: 0;
   position: absolute;
@@ -57,7 +57,7 @@
   border-radius: 3px 0 0 3px;
 }
 
-.clock-minute {
+.clockMinute {
   width: 0;
   height: 0;
   position: absolute;
@@ -70,7 +70,7 @@
   border-radius: 3px 0 0 3px;
 }
 
-.clock-second {
+.clockSecond {
   width: 0;
   height: 0;
   position: absolute;

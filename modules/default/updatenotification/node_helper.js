@@ -1,6 +1,6 @@
-const NodeHelper = require("node_helper");
-const defaultModules = require("../defaultmodules");
 const GitHelper = require("./git_helper");
+const defaultModules = require("../defaultmodules");
+const NodeHelper = require("node_helper");
 
 const ONE_MINUTE = 60 * 1000;
 
@@ -19,9 +19,7 @@ module.exports = NodeHelper.create({
 			}
 		}
 
-		if (!this.ignoreUpdateChecking("MagicMirror")) {
-			await this.gitHelper.add("MagicMirror");
-		}
+		await this.gitHelper.add("default");
 	},
 
 	async socketNotificationReceived(notification, payload) {

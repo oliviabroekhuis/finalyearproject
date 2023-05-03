@@ -1,0 +1,52 @@
+/*
+CSS FOR TRAINS MODULE
+*/
+
+
+.trains .trains {
+  font-size: 75%;
+  text-align: left;
+  display: inline-block;
+}
+
+.trains .departure {
+  max-width: 200px;
+  padding-left: 5px;
+  padding-right: 10px;
+  white-space: nowrap;
+}
+
+.trains .stationName {
+  font-size: 15px;
+  line-height: 15px;
+  color: #ffffff;
+}
+
+.trains .num-platform {
+  font-weight: bold;
+  padding-right: 10px;
+}
+
+.trains .status-code {
+  padding-left: 20px;
+  color: white;
+}
+
+.trains .status-code.late {
+  color: red;
+}
+
+.trains .status-code.early {
+  color: blue;
+}
+
+.trains .status-code.ontime {
+  color: green
+}
+
+.trains .time{
+  padding-left: 20px;
+  color: white;
+}
+
+

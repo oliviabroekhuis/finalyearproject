@@ -4,14 +4,13 @@
  * By Michael Teeuw https://michaelteeuw.nl
  * MIT Licensed.
  */
-
-const https = require("https");
-const digest = require("digest-fetch");
-const ical = require("node-ical");
-const fetch = require("fetch");
+const CalendarUtils = require("./calendarutils");
 const Log = require("logger");
 const NodeHelper = require("node_helper");
-const CalendarUtils = require("./calendarutils");
+const ical = require("node-ical");
+const fetch = require("fetch");
+const digest = require("digest-fetch");
+const https = require("https");
 
 /**
  *
@@ -42,7 +41,7 @@ const CalendarFetcher = function (url, reloadInterval, excludedEvents, maximumEn
 		let fetcher = null;
 		let httpsAgent = null;
 		let headers = {
-			"User-Agent": `Mozilla/5.0 (Node.js ${nodeVersion}) MagicMirror/${global.version}`
+			"User-Agent": "Mozilla/5.0 (Node.js " + nodeVersion + ") MagicMirror/" + global.version
 		};
 
 		if (selfSignedCert) {
@@ -52,11 +51,11 @@ const CalendarFetcher = function (url, reloadInterval, excludedEvents, maximumEn
 		}
 		if (auth) {
 			if (auth.method === "bearer") {
-				headers.Authorization = `Bearer ${auth.pass}`;
+				headers.Authorization = "Bearer " + auth.pass;
 			} else if (auth.method === "digest") {
 				fetcher = new digest(auth.user, auth.pass).fetch(url, { headers: headers, agent: httpsAgent });
 			} else {
-				headers.Authorization = `Basic ${Buffer.from(`${auth.user}:${auth.pass}`).toString("base64")}`;
+				headers.Authorization = "Basic " + Buffer.from(auth.user + ":" + auth.pass).toString("base64");
 			}
 		}
 		if (fetcher === null) {
@@ -71,7 +70,7 @@ const CalendarFetcher = function (url, reloadInterval, excludedEvents, maximumEn
 
 				try {
 					data = ical.parseICS(responseData);
-					Log.debug(`parsed data=${JSON.stringify(data)}`);
+					Log.debug("parsed data=" + JSON.stringify(data));
 					events = CalendarUtils.filterEvents(data, {
 						excludedEvents,
 						includePastEvents,
@@ -115,7 +114,7 @@ const CalendarFetcher = function (url, reloadInterval, excludedEvents, maximumEn
 	 * Broadcast the existing events.
 	 */
 	this.broadcastEvents = function () {
-		Log.info(`Calendar-Fetcher: Broadcasting ${events.length} events.`);
+		Log.info("Calendar-Fetcher: Broadcasting " + events.length + " events.");
 		eventsReceivedCallback(this);
 	};
 

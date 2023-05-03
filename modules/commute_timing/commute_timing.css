@@ -1,0 +1,121 @@
+.commute_timing .row {
+  position: relative;
+  padding: 1px;
+  border-bottom: solid 1px #222;
+  min-height: 35px;
+  min-width: 300px;
+}
+
+
+.commute_timing .transit-mode-icon {
+  background-color: black; 
+  color: white; 
+  border: none; 
+  cursor: pointer; /* Mouse pointer on hover */
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.commute_timing .transit-mode-icon.car {
+  background-color: black; 
+  color: magenta; 
+
+}
+
+.commute_timing .transit-mode-icon.bike {
+  background-color: black; 
+  color: orange; 
+
+}
+
+.commute_timing .transit-mode-icon.walk {
+  background-color: black; 
+  color: green; 
+
+}
+
+.commute_timing .destination-label {
+  display: block;
+  margin-left: 30px;
+  margin-right: 60px;
+  font-size: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 25px;
+  margin-top: 4px;
+  margin-bottom: 6px;
+  text-align: left;
+}
+
+.commute_timing .row.with-multiple-routes .destination-label {
+  margin-right: 0px;
+}
+
+.commute_timing .travel-time,
+.commute_timing .loading-icon,
+.commute_timing .route-error {
+  text-align: right;
+  font-size: 16px;
+  font-weight: 400;
+  display: block;
+  white-space: nowrap;
+  position: absolute;
+  top: 6px;
+  right: 0px;
+  line-height: 18px;
+  margin-top: 4px;
+}
+
+.commute_timing .route-error {
+  color: #be0e0e;
+}
+
+
+.commute_timing .status-good {  
+  color: #a3ea80;
+}
+.commute_timing .travel-time.status-moderate {  
+  color: #f8dd70;
+}
+.commute_timing .travel-time.status-poor {  
+  color: #ff5a44;
+}
+
+
+.commute_timing .route-summary {
+  font-size: 16px;
+  font-weight: 400;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 18px;
+  margin-bottom: 6px;
+  margin-left: 30px;
+  /*text-transform: uppercase;*/
+  text-align: left;
+}
+
+.commute_timing .route-summary-outer {
+  position: relative;  
+}
+
+.commute_timing .route-summary-outer .route-summary {
+  margin-right: 60px;
+}
+
+.commute_timing .route-summary-outer .travel-time {
+  top: 0px;
+  margin-top: 0px;
+}
+
+.commute_timing .route-summary .transit-leg {
+  white-space: nowrap;
+  margin-right: 12px;
+}
+
+.commute_timing .route-summary .transit-leg .transit-arrival-time {
+  text-transform: lowercase;
+}

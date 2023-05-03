@@ -1,0 +1,63 @@
+.menu-container {
+  width: 100%;
+  display: flex;
+  left: 50%;
+  top: 50%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: static;
+  bottom: 30px;
+  z-index: 999;
+}
+
+.menu-container__hide-button.is-selected {
+  z-index: 999;
+}
+
+.menu-container__hide-button {
+  width: 70px;
+  height: 70px;
+  cursor: pointer;
+}
+
+.menu-container__shutdown-button {
+  width: 70px;
+  height: 70px;
+  cursor: pointer;
+}
+
+.menu-container__restart-button {
+  width: 70px;
+  height: 70px;
+  cursor: pointer;
+}
+
+.menu-container__refresh-button {
+  width: 70px;
+  height: 70px;
+  cursor: pointer;
+}
+.menu-container span {
+  visibility: visible !important;
+}
+
+.menu-hide {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s 0s, opacity 1s linear;
+}
+
+.menu-hide.fade {
+  visibility: hidden;
+  opacity: 0.35;
+  transition: visibility 0s 1s, opacity 1s linear;
+}
+
+.menu-hide.show {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s 0s, opacity 1s linear;
+}
+
+

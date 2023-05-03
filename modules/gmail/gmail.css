@@ -1,0 +1,50 @@
+/*
+CSS FOR GMAIL MODULE
+*/
+
+.gmail .divTable {
+  max-height: 150px;
+  overflow:scroll;
+}
+.gmail .mail-displayed {
+  font-size: 20px;
+  line-height: 25px;
+}
+.gmail .empty-inbox {
+  display: none;
+}
+
+.gmail .from-column {
+  width: 1px;
+  padding-right: 8px;
+  text-align: left;
+  font-weight: 200;
+  white-space: nowrap;
+}
+
+.gmail .subject-column {
+  padding-right: 8px;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.gmail .date-column {
+  width: 1px;
+  padding-right: 8px;
+  font-weight: 300;
+  text-align: right;
+  white-space: nowrap;
+
+}
+
+.gmail .time-column {
+  width: 1px;
+  white-space: nowrap;
+  padding-right: 8px;
+  font-weight: 300;
+  text-align: right;
+}
+
+
+
+
